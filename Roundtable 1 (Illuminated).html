@@ -1,0 +1,351 @@
+<head>
+		<title>Roundtable 1 (Illuminated)</title>
+		<style type="text/css">
+html{ box-sizing:border-box;}*, *:before, *:after{ box-sizing:inherit;}html, body{margin:0px;padding:0px;font-family:'Open Sans', 'Source Code Pro', 'Deja Vu Sans', 'Arial', sans-serif;font-size:12pt;}input{font-family:'Open Sans', 'Source Code Pro', 'Deja Vu Sans', 'Arial', sans-serif;}#header{border:1px solid #990;width:100%;height:35px;font-size:12pt;font-weight:bold;background:#36c;color:#eef;padding:5px;}#workspace{position:absolute;top:35px;left:0;right:0;bottom:25px;}#sidebar{position:absolute;left:0;top:0px;bottom:0px;width:250px;border-right:1px solid #999;background:#eee;}#sidebar span{display:inline-block;width:100%;text-decoration:none;color:#009;cursor:pointer;}#sidebar span:hover{background:#ffc;text-decoration:underline;}#links{height:120px;font-size:10pt;padding:4px;}#passageListHeader{width:100%;height:25px;padding:0px;}#filter{font-size:10pt;font-weight:bold;margin:0px;padding:0px;width:100%;height:25px;border:0px;border-top:1px solid #999;border-bottom:1px solid #999;background:#ddf;}#filter:focus{outline:none;box-shadow:none;}#passageListContent{position:absolute;top:145px;bottom:0;left:0;width:250px;overflow:auto;padding:4px;font-size:10pt;}.flag{display:inline-block;float:right;width:15px;height:15px;font-size:7pt;text-align:center;font-weight:bold;margin:2px 2px 0px 0px;}.reviewed{border:1px solid #090;background:#bfb;border-radius:5px;}.changed{border:1px solid #900;background:#fbb;border-radius:7px;}#contentArea{ height:99%;margin-left:250px;padding:5px 5px 5px 10px;overflow:auto;}#generalOutput{display:none;}#generalHeader{height:35px;padding:2px;border-bottom:1px solid #999;}#generalTitle{display:inline-block;font-weight:bold;font-size:16pt;}.infoTile{display:inline-block;float:left;overflow:auto;border:1px solid #999;border-radius:5px;margin:10px 10px 0px 0px;}.tile1x1{width:200px;height:250px;}.tile2x1{width:410px;height:250px;}.tile1x2{width:200px;height:510px;}.tile2x2{width:410px;height:510px;}.infoTile .title{background:#ddf;display:block;font-weight:bold;border-bottom:1px solid #999;padding:1px 2px 1px 4px;}.infoTile .content{font-size:8pt;}.infoTile p{margin:0px;padding:4px;line-height:150%;}.infoTile table{border-spacing:0px;width:100%;font-size:8pt;}.infoTile table tr.header td{background:#eee;border-bottom:1px solid #999;font-weight:bold;}.infoTile table td{padding:2px;margin:0px;text-align:right;padding-right:4px;border-left:1px solid #999;}.infoTile table td:nth-of-type(1){border-left:0px;padding-left:4px;text-align:left;}.infoTile span.link{display:inline-block;width:100%;text-decoration:none;color:#009;cursor:pointer;}.infoTile span.link:hover{background:#ffc;text-decoration:underline;}#passageViewer{display:none;}#passageHeader{height:35px;padding:2px;border-bottom:1px solid #999;}#passageTitle{display:inline-block;font-weight:bold;font-size:16pt;}#passageTags{position:absolute;top:0;display:inline-block;padding:0px 0px 0px 15px;margin-top:10px;}#passageControls{display:block;font-size:9pt;border-bottom:1px solid #999;background:#eee;height:25px;padding:2px 5px 1px 5px;}#passageControls input{font-size:8pt;}#dirtyControls{float:right;display:none;}#reviewedControls{display:none;}#unreviewedControls{display:none;}#passageContent{position:absolute;top:60px;bottom:0;left:260px;right:0;}#editor{font-size:14pt;width:100%;height:99%;resize:none;}#editorCorral{margin-top:5px;position:absolute;top:0;bottom:0;left:0;width:100%;border:0px;}#editor:focus{outline:0px;}#changeViewer{font-size:10pt;white-space:pre-wrap;display:none;border-top:1px dashed #999;padding-top:10px;position:absolute;bottom:0;left:0;right:0;width:100%;height:300px;overflow:auto;}.tag{border:1px solid #cc9;padding:1px 5px 1px 5px;margin-right:4px;margin-bottom:3px;background:#fea;color:#660;border-radius:3px;font-size:9pt;cursor:pointer;}ins{background:#9f9;}del{background:#f99;}#footer{position:absolute;height:25px;bottom:0;left:0;right:0;font-weight:bold;background:#36c;color:#eef;font-size:12pt;padding:1px 4px 0px 4px;}#footer input{font-weight:bold;font-size:8pt;}#footerLeft{}#footerRight{float:right;}
+		</style>
+		<script type="text/javascript">
+/**
+ * Diff Match and Patch
+ *
+ * Copyright 2006 Google Inc.
+ * http://code.google.com/p/google-diff-match-patch/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+(function(){function diff_match_patch(){this.Diff_Timeout=1;this.Diff_EditCost=4;this.Match_Threshold=0.5;this.Match_Distance=1E3;this.Patch_DeleteThreshold=0.5;this.Patch_Margin=4;this.Match_MaxBits=32}
+diff_match_patch.prototype.diff_main=function(a,b,c,d){"undefined"==typeof d&&(d=0>=this.Diff_Timeout?Number.MAX_VALUE:(new Date).getTime()+1E3*this.Diff_Timeout);if(null==a||null==b)throw Error("Null input. (diff_main)");if(a==b)return a?[[0,a]]:[];"undefined"==typeof c&&(c=!0);var e=c,f=this.diff_commonPrefix(a,b);c=a.substring(0,f);a=a.substring(f);b=b.substring(f);var f=this.diff_commonSuffix(a,b),g=a.substring(a.length-f);a=a.substring(0,a.length-f);b=b.substring(0,b.length-f);a=this.diff_compute_(a,b,e,d);c&&a.unshift([0,c]);g&&a.push([0,g]);this.diff_cleanupMerge(a);return a};diff_match_patch.prototype.diff_compute_=function(a,b,c,d){if(!a)return[[1,b]];if(!b)return[[-1,a]];var e=a.length>b.length?a:b,f=a.length>b.length?b:a,g=e.indexOf(f);return-1!=g?(c=[[1,e.substring(0,g)],[0,f],[1,e.substring(g+f.length)]],a.length>b.length&&(c[0][0]=c[2][0]=-1),c):1==f.length?[[-1,a],[1,b]]:(e=this.diff_halfMatch_(a,b))?(f=e[0],a=e[1],g=e[2],b=e[3],e=e[4],f=this.diff_main(f,g,c,d),c=this.diff_main(a,b,c,d),f.concat([[0,e]],c)):c&&100<a.length&&100<b.length?this.diff_lineMode_(a,b,d):this.diff_bisect_(a,b,d)};diff_match_patch.prototype.diff_lineMode_=function(a,b,c){var d=this.diff_linesToChars_(a,b);a=d.chars1;b=d.chars2;d=d.lineArray;a=this.diff_main(a,b,!1,c);this.diff_charsToLines_(a,d);this.diff_cleanupSemantic(a);a.push([0,""]);for(var e=d=b=0,f="",g="";b<a.length;){switch(a[b][0]){case 1:e++;g+=a[b][1];break;case-1:d++;f+=a[b][1];break;case 0:if(1<=d&&1<=e){a.splice(b-d-e,d+e);b=b-d-e;d=this.diff_main(f,g,!1,c);for(e=d.length-1;0<=e;e--)a.splice(b,0,d[e]);b+=d.length}d=e=0;g=f=""}b++}a.pop();return a};diff_match_patch.prototype.diff_bisect_=function(a,b,c){for(var d=a.length,e=b.length,f=Math.ceil((d+e)/2),g=f,h=2*f,j=Array(h),i=Array(h),k=0;k<h;k++)j[k]=-1,i[k]=-1;j[g+1]=0;i[g+1]=0;for(var k=d-e,q=0!=k%2,r=0,t=0,p=0,w=0,v=0;v<f&&!((new Date).getTime()>c);v++){for(var n=-v+r;n<=v-t;n+=2){var l=g+n,m;m=n==-v||n!=v&&j[l-1]<j[l+1]?j[l+1]:j[l-1]+1;for(var s=m-n;m<d&&s<e&&a.charAt(m)==b.charAt(s);)m++,s++;j[l]=m;if(m>d)t+=2;else if(s>e)r+=2;else if(q&&(l=g+k-n,0<=l&&l<h&&-1!=i[l])){var u=d-i[l];if(m>=u)return this.diff_bisectSplit_(a,b,m,s,c)}}for(n=-v+p;n<=v-w;n+=2){l=g+n;u=n==-v||n!=v&&i[l-1]<i[l+1]?i[l+1]:i[l-1]+1;for(m=u-n;u<d&&m<e&&a.charAt(d-u-1)==b.charAt(e-m-1);)u++,m++;i[l]=u;if(u>d)w+=2;else if(m>e)p+=2;else if(!q&&(l=g+k-n,0<=l&&(l<h&&-1!=j[l])&&(m=j[l],s=g+m-l,u=d-u,m>=u)))return this.diff_bisectSplit_(a,b,m,s,c)}}return[[-1,a],[1,b]]};diff_match_patch.prototype.diff_bisectSplit_=function(a,b,c,d,e){var f=a.substring(0,c),g=b.substring(0,d);a=a.substring(c);b=b.substring(d);f=this.diff_main(f,g,!1,e);e=this.diff_main(a,b,!1,e);return f.concat(e)};diff_match_patch.prototype.diff_linesToChars_=function(a,b){function c(a){for(var b="",c=0,f=-1,g=d.length;f<a.length-1;){f=a.indexOf("\n",c);-1==f&&(f=a.length-1);var r=a.substring(c,f+1),c=f+1;(e.hasOwnProperty?e.hasOwnProperty(r):void 0!==e[r])?b+=String.fromCharCode(e[r]):(b+=String.fromCharCode(g),e[r]=g,d[g++]=r)}return b}var d=[],e={};d[0]="";var f=c(a),g=c(b);return{chars1:f,chars2:g,lineArray:d}};diff_match_patch.prototype.diff_charsToLines_=function(a,b){for(var c=0;c<a.length;c++){for(var d=a[c][1],e=[],f=0;f<d.length;f++)e[f]=b[d.charCodeAt(f)];a[c][1]=e.join("")}};diff_match_patch.prototype.diff_commonPrefix=function(a,b){if(!a||!b||a.charAt(0)!=b.charAt(0))return 0;for(var c=0,d=Math.min(a.length,b.length),e=d,f=0;c<e;)a.substring(f,e)==b.substring(f,e)?f=c=e:d=e,e=Math.floor((d-c)/2+c);return e};diff_match_patch.prototype.diff_commonSuffix=function(a,b){if(!a||!b||a.charAt(a.length-1)!=b.charAt(b.length-1))return 0;for(var c=0,d=Math.min(a.length,b.length),e=d,f=0;c<e;)a.substring(a.length-e,a.length-f)==b.substring(b.length-e,b.length-f)?f=c=e:d=e,e=Math.floor((d-c)/2+c);return e};diff_match_patch.prototype.diff_commonOverlap_=function(a,b){var c=a.length,d=b.length;if(0==c||0==d)return 0;c>d?a=a.substring(c-d):c<d&&(b=b.substring(0,c));c=Math.min(c,d);if(a==b)return c;for(var d=0,e=1;;){var f=a.substring(c-e),f=b.indexOf(f);if(-1==f)return d;e+=f;if(0==f||a.substring(c-e)==b.substring(0,e))d=e,e++}};diff_match_patch.prototype.diff_halfMatch_=function(a,b){function c(a,b,c){for(var d=a.substring(c,c+Math.floor(a.length/4)),e=-1,g="",h,j,n,l;-1!=(e=b.indexOf(d,e+1));){var m=f.diff_commonPrefix(a.substring(c),b.substring(e)),s=f.diff_commonSuffix(a.substring(0,c),b.substring(0,e));g.length<s+m&&(g=b.substring(e-s,e)+b.substring(e,e+m),h=a.substring(0,c-s),j=a.substring(c+m),n=b.substring(0,e-s),l=b.substring(e+m))}return 2*g.length>=a.length?[h,j,n,l,g]:null}if(0>=this.Diff_Timeout)return null;var d=a.length>b.length?a:b,e=a.length>b.length?b:a;if(4>d.length||2*e.length<d.length)return null;var f=this,g=c(d,e,Math.ceil(d.length/4)),d=c(d,e,Math.ceil(d.length/2)),h;if(!g&&!d)return null;h=d?g?g[4].length>d[4].length?g:d:d:g;var j;a.length>b.length?(g=h[0],d=h[1],e=h[2],j=h[3]):(e=h[0],j=h[1],g=h[2],d=h[3]);h=h[4];return[g,d,e,j,h]};diff_match_patch.prototype.diff_cleanupSemantic=function(a){for(var b=!1,c=[],d=0,e=null,f=0,g=0,h=0,j=0,i=0;f<a.length;)0==a[f][0]?(c[d++]=f,g=j,h=i,i=j=0,e=a[f][1]):(1==a[f][0]?j+=a[f][1].length:i+=a[f][1].length,e&&(e.length<=Math.max(g,h)&&e.length<=Math.max(j,i))&&(a.splice(c[d-1],0,[-1,e]),a[c[d-1]+1][0]=1,d--,d--,f=0<d?c[d-1]:-1,i=j=h=g=0,e=null,b=!0)),f++;b&&this.diff_cleanupMerge(a);this.diff_cleanupSemanticLossless(a);for(f=1;f<a.length;){if(-1==a[f-1][0]&&1==a[f][0]){b=a[f-1][1];c=a[f][1];d=this.diff_commonOverlap_(b,c);e=this.diff_commonOverlap_(c,b);if(d>=e){if(d>=b.length/2||d>=c.length/2)a.splice(f,0,[0,c.substring(0,d)]),a[f-1][1]=b.substring(0,b.length-d),a[f+1][1]=c.substring(d),f++}else if(e>=b.length/2||e>=c.length/2)a.splice(f,0,[0,b.substring(0,e)]),a[f-1][0]=1,a[f-1][1]=c.substring(0,c.length-e),a[f+1][0]=-1,a[f+1][1]=b.substring(e),f++;f++}f++}};diff_match_patch.prototype.diff_cleanupSemanticLossless=function(a){function b(a,b){if(!a||!b)return 6;var c=a.charAt(a.length-1),d=b.charAt(0),e=c.match(diff_match_patch.nonAlphaNumericRegex_),f=d.match(diff_match_patch.nonAlphaNumericRegex_),g=e&&c.match(diff_match_patch.whitespaceRegex_),h=f&&d.match(diff_match_patch.whitespaceRegex_),c=g&&c.match(diff_match_patch.linebreakRegex_),d=h&&d.match(diff_match_patch.linebreakRegex_),i=c&&a.match(diff_match_patch.blanklineEndRegex_),j=d&&b.match(diff_match_patch.blanklineStartRegex_);return i||j?5:c||d?4:e&&!g&&h?3:g||h?2:e||f?1:0}for(var c=1;c<a.length-1;){if(0==a[c-1][0]&&0==a[c+1][0]){var d=a[c-1][1],e=a[c][1],f=a[c+1][1],g=this.diff_commonSuffix(d,e);if(g)var h=e.substring(e.length-g),d=d.substring(0,d.length-g),e=h+e.substring(0,e.length-g),f=h+f;for(var g=d,h=e,j=f,i=b(d,e)+b(e,f);e.charAt(0)===f.charAt(0);){var d=d+e.charAt(0),e=e.substring(1)+f.charAt(0),f=f.substring(1),k=b(d,e)+b(e,f);k>=i&&(i=k,g=d,h=e,j=f)}a[c-1][1]!=g&&(g?a[c-1][1]=g:(a.splice(c-1,1),c--),a[c][1]=h,j?a[c+1][1]=j:(a.splice(c+1,1),c--))}c++}};diff_match_patch.nonAlphaNumericRegex_=/[^a-zA-Z0-9]/;diff_match_patch.whitespaceRegex_=/s/;diff_match_patch.linebreakRegex_=/[\r\n]/;diff_match_patch.blanklineEndRegex_=/\n\r?\n$/;diff_match_patch.blanklineStartRegex_=/^\r?\n\r?\n/;diff_match_patch.prototype.diff_cleanupEfficiency=function(a){for(var b=!1,c=[],d=0,e=null,f=0,g=!1,h=!1,j=!1,i=!1;f<a.length;){if(0==a[f][0])a[f][1].length<this.Diff_EditCost&&(j||i)?(c[d++]=f,g=j,h=i,e=a[f][1]):(d=0,e=null),j=i=!1;else if(-1==a[f][0]?i=!0:j=!0,e&&(g&&h&&j&&i||e.length<this.Diff_EditCost/2&&3==g+h+j+i))a.splice(c[d-1],0,[-1,e]),a[c[d-1]+1][0]=1,d--,e=null,g&&h?(j=i=!0,d=0):(d--,f=0<d?c[d-1]:-1,j=i=!1),b=!0;f++}b&&this.diff_cleanupMerge(a)};diff_match_patch.prototype.diff_cleanupMerge=function(a){a.push([0,""]);for(var b=0,c=0,d=0,e="",f="",g;b<a.length;)switch(a[b][0]){case 1:d++;f+=a[b][1];b++;break;case-1:c++;e+=a[b][1];b++;break;case 0:1<c+d?(0!==c&&0!==d&&(g=this.diff_commonPrefix(f,e),0!==g&&(0<b-c-d&&0==a[b-c-d-1][0]?a[b-c-d-1][1]+=f.substring(0,g):(a.splice(0,0,[0,f.substring(0,g)]),b++),f=f.substring(g),e=e.substring(g)),g=this.diff_commonSuffix(f,e),0!==g&&(a[b][1]=f.substring(f.length-g)+a[b][1],f=f.substring(0,f.length-
+g),e=e.substring(0,e.length-g))),0===c?a.splice(b-d,c+d,[1,f]):0===d?a.splice(b-c,c+d,[-1,e]):a.splice(b-c-d,c+d,[-1,e],[1,f]),b=b-c-d+(c?1:0)+(d?1:0)+1):0!==b&&0==a[b-1][0]?(a[b-1][1]+=a[b][1],a.splice(b,1)):b++,c=d=0,f=e=""}""===a[a.length-1][1]&&a.pop();c=!1;for(b=1;b<a.length-1;)0==a[b-1][0]&&0==a[b+1][0]&&(a[b][1].substring(a[b][1].length-a[b-1][1].length)==a[b-1][1]?(a[b][1]=a[b-1][1]+a[b][1].substring(0,a[b][1].length-a[b-1][1].length),a[b+1][1]=a[b-1][1]+a[b+1][1],a.splice(b-1,1),c=!0):a[b][1].substring(0,a[b+1][1].length)==a[b+1][1]&&(a[b-1][1]+=a[b+1][1],a[b][1]=a[b][1].substring(a[b+1][1].length)+a[b+1][1],a.splice(b+1,1),c=!0)),b++;c&&this.diff_cleanupMerge(a)};diff_match_patch.prototype.diff_xIndex=function(a,b){var c=0,d=0,e=0,f=0,g;for(g=0;g<a.length;g++){1!==a[g][0]&&(c+=a[g][1].length);-1!==a[g][0]&&(d+=a[g][1].length);if(c>b)break;e=c;f=d}return a.length!=g&&-1===a[g][0]?f:f+(b-e)};diff_match_patch.prototype.diff_prettyHtml=function(a){for(var b=[],c=/&/g,d=/</g,e=/>/g,f=/\n/g,g=0;g<a.length;g++){var h=a[g][0],j=a[g][1],j=j.replace(c,"&amp;").replace(d,"&lt;").replace(e,"&gt;").replace(f,"&para;<br>");switch(h){case 1:b[g]='<ins style="background:#e6ffe6;">'+j+"</ins>";break;case-1:b[g]='<del style="background:#ffe6e6;">'+j+"</del>";break;case 0:b[g]="<span>"+j+"</span>"}}return b.join("")};diff_match_patch.prototype.diff_text1=function(a){for(var b=[],c=0;c<a.length;c++)1!==a[c][0]&&(b[c]=a[c][1]);return b.join("")};diff_match_patch.prototype.diff_text2=function(a){for(var b=[],c=0;c<a.length;c++)-1!==a[c][0]&&(b[c]=a[c][1]);return b.join("")};diff_match_patch.prototype.diff_levenshtein=function(a){for(var b=0,c=0,d=0,e=0;e<a.length;e++){var f=a[e][0],g=a[e][1];switch(f){case 1:c+=g.length;break;case-1:d+=g.length;break;case 0:b+=Math.max(c,d),d=c=0}}return b+=Math.max(c,d)};diff_match_patch.prototype.diff_toDelta=function(a){for(var b=[],c=0;c<a.length;c++)switch(a[c][0]){case 1:b[c]="+"+encodeURI(a[c][1]);break;case-1:b[c]="-"+a[c][1].length;break;case 0:b[c]="="+a[c][1].length}return b.join("	").replace(/%20/g," ")};diff_match_patch.prototype.diff_fromDelta=function(a,b){for(var c=[],d=0,e=0,f=b.split(/	/g),g=0;g<f.length;g++){var h=f[g].substring(1);switch(f[g].charAt(0)){case"+":try{c[d++]=[1,decodeURI(h)]}catch(j){throw Error("Illegal escape in diff_fromDelta: "+h);}break;case"-":case"=":var i=parseInt(h,10);if(isNaN(i)||0>i)throw Error("Invalid number in diff_fromDelta: "+h);h=a.substring(e,e+=i);"="==f[g].charAt(0)?c[d++]=[0,h]:c[d++]=[-1,h];break;default:if(f[g])throw Error("Invalid diff operation in diff_fromDelta: "+
+f[g]);}}if(e!=a.length)throw Error("Delta length ("+e+") does not equal source text length ("+a.length+").");return c};diff_match_patch.prototype.match_main=function(a,b,c){if(null==a||null==b||null==c)throw Error("Null input. (match_main)");c=Math.max(0,Math.min(c,a.length));return a==b?0:a.length?a.substring(c,c+b.length)==b?c:this.match_bitap_(a,b,c):-1};diff_match_patch.prototype.match_bitap_=function(a,b,c){function d(a,d){var e=a/b.length,g=Math.abs(c-d);return!f.Match_Distance?g?1:e:e+g/f.Match_Distance}if(b.length>this.Match_MaxBits)throw Error("Pattern too long for this browser.");var e=this.match_alphabet_(b),f=this,g=this.Match_Threshold,h=a.indexOf(b,c);-1!=h&&(g=Math.min(d(0,h),g),h=a.lastIndexOf(b,c+b.length),-1!=h&&(g=Math.min(d(0,h),g)));for(var j=1<<b.length-1,h=-1,i,k,q=b.length+a.length,r,t=0;t<b.length;t++){i=0;for(k=q;i<k;)d(t,c+
+k)<=g?i=k:q=k,k=Math.floor((q-i)/2+i);q=k;i=Math.max(1,c-k+1);var p=Math.min(c+k,a.length)+b.length;k=Array(p+2);for(k[p+1]=(1<<t)-1;p>=i;p--){var w=e[a.charAt(p-1)];k[p]=0===t?(k[p+1]<<1|1)&w:(k[p+1]<<1|1)&w|((r[p+1]|r[p])<<1|1)|r[p+1];if(k[p]&j&&(w=d(t,p-1),w<=g))if(g=w,h=p-1,h>c)i=Math.max(1,2*c-h);else break}if(d(t+1,c)>g)break;r=k}return h};diff_match_patch.prototype.match_alphabet_=function(a){for(var b={},c=0;c<a.length;c++)b[a.charAt(c)]=0;for(c=0;c<a.length;c++)b[a.charAt(c)]|=1<<a.length-c-1;return b};diff_match_patch.prototype.patch_addContext_=function(a,b){if(0!=b.length){for(var c=b.substring(a.start2,a.start2+a.length1),d=0;b.indexOf(c)!=b.lastIndexOf(c)&&c.length<this.Match_MaxBits-this.Patch_Margin-this.Patch_Margin;)d+=this.Patch_Margin,c=b.substring(a.start2-d,a.start2+a.length1+d);d+=this.Patch_Margin;(c=b.substring(a.start2-d,a.start2))&&a.diffs.unshift([0,c]);(d=b.substring(a.start2+a.length1,a.start2+a.length1+d))&&a.diffs.push([0,d]);a.start1-=c.length;a.start2-=c.length;a.length1+=c.length+d.length;a.length2+=c.length+d.length}};diff_match_patch.prototype.patch_make=function(a,b,c){var d;if("string"==typeof a&&"string"==typeof b&&"undefined"==typeof c)d=a,b=this.diff_main(d,b,!0),2<b.length&&(this.diff_cleanupSemantic(b),this.diff_cleanupEfficiency(b));else if(a&&"object"==typeof a&&"undefined"==typeof b&&"undefined"==typeof c)b=a,d=this.diff_text1(b);else if("string"==typeof a&&b&&"object"==typeof b&&"undefined"==typeof c)d=a;else if("string"==typeof a&&"string"==typeof b&&c&&"object"==typeof c)d=a,b=c;else throw Error("Unknown call format to patch_make.");if(0===b.length)return[];c=[];a=new diff_match_patch.patch_obj;for(var e=0,f=0,g=0,h=d,j=0;j<b.length;j++){var i=b[j][0],k=b[j][1];!e&&0!==i&&(a.start1=f,a.start2=g);switch(i){case 1:a.diffs[e++]=b[j];a.length2+=k.length;d=d.substring(0,g)+k+d.substring(g);break;case-1:a.length1+=k.length;a.diffs[e++]=b[j];d=d.substring(0,g)+d.substring(g+k.length);break;case 0:k.length<=2*this.Patch_Margin&&e&&b.length!=j+1?(a.diffs[e++]=b[j],a.length1+=k.length,a.length2+=k.length):k.length>=2*this.Patch_Margin&&e&&(this.patch_addContext_(a,h),c.push(a),a=new diff_match_patch.patch_obj,e=0,h=d,f=g)}1!==i&&(f+=k.length);-1!==i&&(g+=k.length)}e&&(this.patch_addContext_(a,h),c.push(a));return c};diff_match_patch.prototype.patch_deepCopy=function(a){for(var b=[],c=0;c<a.length;c++){var d=a[c],e=new diff_match_patch.patch_obj;e.diffs=[];for(var f=0;f<d.diffs.length;f++)e.diffs[f]=d.diffs[f].slice();e.start1=d.start1;e.start2=d.start2;e.length1=d.length1;e.length2=d.length2;b[c]=e}return b};diff_match_patch.prototype.patch_apply=function(a,b){if(0==a.length)return[b,[]];a=this.patch_deepCopy(a);var c=this.patch_addPadding(a);b=c+b+c;this.patch_splitMax(a);for(var d=0,e=[],f=0;f<a.length;f++){var g=a[f].start2+d,h=this.diff_text1(a[f].diffs),j,i=-1;if(h.length>this.Match_MaxBits){if(j=this.match_main(b,h.substring(0,this.Match_MaxBits),g),-1!=j&&(i=this.match_main(b,h.substring(h.length-this.Match_MaxBits),g+h.length-this.Match_MaxBits),-1==i||j>=i))j=-1}else j=this.match_main(b,h,g);if(-1==j)e[f]=!1,d-=a[f].length2-a[f].length1;else if(e[f]=!0,d=j-g,g=-1==i?b.substring(j,j+h.length):b.substring(j,i+this.Match_MaxBits),h==g)b=b.substring(0,j)+this.diff_text2(a[f].diffs)+b.substring(j+h.length);else if(g=this.diff_main(h,g,!1),h.length>this.Match_MaxBits&&this.diff_levenshtein(g)/h.length>this.Patch_DeleteThreshold)e[f]=!1;else{this.diff_cleanupSemanticLossless(g);for(var h=0,k,i=0;i<a[f].diffs.length;i++){var q=a[f].diffs[i];0!==q[0]&&(k=this.diff_xIndex(g,h));1===q[0]?b=b.substring(0,j+k)+q[1]+b.substring(j+k):-1===q[0]&&(b=b.substring(0,j+k)+b.substring(j+this.diff_xIndex(g,h+q[1].length)));-1!==q[0]&&(h+=q[1].length)}}}b=b.substring(c.length,b.length-c.length);return[b,e]};diff_match_patch.prototype.patch_addPadding=function(a){for(var b=this.Patch_Margin,c="",d=1;d<=b;d++)c+=String.fromCharCode(d);for(d=0;d<a.length;d++)a[d].start1+=b,a[d].start2+=b;var d=a[0],e=d.diffs;if(0==e.length||0!=e[0][0])e.unshift([0,c]),d.start1-=b,d.start2-=b,d.length1+=b,d.length2+=b;else if(b>e[0][1].length){var f=b-e[0][1].length;e[0][1]=c.substring(e[0][1].length)+e[0][1];d.start1-=f;d.start2-=f;d.length1+=f;d.length2+=f}d=a[a.length-1];e=d.diffs;0==e.length||0!=e[e.length-1][0]?(e.push([0,c]),d.length1+=b,d.length2+=b):b>e[e.length-1][1].length&&(f=b-e[e.length-1][1].length,e[e.length-1][1]+=c.substring(0,f),d.length1+=f,d.length2+=f);return c};diff_match_patch.prototype.patch_splitMax=function(a){for(var b=this.Match_MaxBits,c=0;c<a.length;c++)if(!(a[c].length1<=b)){var d=a[c];a.splice(c--,1);for(var e=d.start1,f=d.start2,g="";0!==d.diffs.length;){var h=new diff_match_patch.patch_obj,j=!0;h.start1=e-g.length;h.start2=f-g.length;""!==g&&(h.length1=h.length2=g.length,h.diffs.push([0,g]));for(;0!==d.diffs.length&&h.length1<b-this.Patch_Margin;){var g=d.diffs[0][0],i=d.diffs[0][1];1===g?(h.length2+=i.length,f+=i.length,h.diffs.push(d.diffs.shift()),j=!1):-1===g&&1==h.diffs.length&&0==h.diffs[0][0]&&i.length>2*b?(h.length1+=i.length,e+=i.length,j=!1,h.diffs.push([g,i]),d.diffs.shift()):(i=i.substring(0,b-h.length1-this.Patch_Margin),h.length1+=i.length,e+=i.length,0===g?(h.length2+=i.length,f+=i.length):j=!1,h.diffs.push([g,i]),i==d.diffs[0][1]?d.diffs.shift():d.diffs[0][1]=d.diffs[0][1].substring(i.length))}g=this.diff_text2(h.diffs);g=g.substring(g.length-this.Patch_Margin);i=this.diff_text1(d.diffs).substring(0,this.Patch_Margin);""!==i&&(h.length1+=i.length,h.length2+=i.length,0!==h.diffs.length&&0===h.diffs[h.diffs.length-1][0]?h.diffs[h.diffs.length-1][1]+=i:h.diffs.push([0,i]));j||a.splice(++c,0,h)}}};diff_match_patch.prototype.patch_toText=function(a){for(var b=[],c=0;c<a.length;c++)b[c]=a[c];return b.join("")};diff_match_patch.prototype.patch_fromText=function(a){var b=[];if(!a)return b;a=a.split("\n");for(var c=0,d=/^@@ -(d+),?(d*) +(d+),?(d*) @@$/;c<a.length;){var e=a[c].match(d);if(!e)throw Error("Invalid patch string: "+a[c]);var f=new diff_match_patch.patch_obj;b.push(f);f.start1=parseInt(e[1],10);""===e[2]?(f.start1--,f.length1=1):"0"==e[2]?f.length1=0:(f.start1--,f.length1=parseInt(e[2],10));f.start2=parseInt(e[3],10);""===e[4]?(f.start2--,f.length2=1):"0"==e[4]?f.length2=0:(f.start2--,f.length2=parseInt(e[4],10));for(c++;c<a.length;){e=a[c].charAt(0);try{var g=decodeURI(a[c].substring(1))}catch(h){throw Error("Illegal escape in patch_fromText: "+g);}if("-"==e)f.diffs.push([-1,g]);else if("+"==e)f.diffs.push([1,g]);else if(" "==e)f.diffs.push([0,g]);else if("@"==e)break;else if(""!==e)throw Error('Invalid patch mode "'+e+'" in: '+g);c++}}return b};diff_match_patch.patch_obj=function(){this.diffs=[];this.start2=this.start1=null;this.length2=this.length1=0};diff_match_patch.patch_obj.prototype.toString=function(){var a,b;a=0===this.length1?this.start1+",0":1==this.length1?this.start1+1:this.start1+1+","+this.length1;b=0===this.length2?this.start2+",0":1==this.length2?this.start2+1:this.start2+1+","+this.length2;a=["@@ -"+a+" +"+b+" @@\n"];var c;for(b=0;b<this.diffs.length;b++){switch(this.diffs[b][0]){case 1:c="+";break;case-1:c="-";break;case 0:c=" "}a[b+1]=c+encodeURI(this.diffs[b][1])+"\n"}return a.join("").replace(/%20/g," ")};this.diff_match_patch=diff_match_patch;this.DIFF_DELETE=-1;this.DIFF_INSERT=1;this.DIFF_EQUAL=0;})()
+		</script>
+		<script type="text/javascript">
+/**
+ * Illume - Twine Proofing Story Format
+ * 
+ * Copyright (c) 2015 Michael McCollum
+ * http://www.maximumverbosity.net/twine/Illume/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+ * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+window.onload=function(){if(typeof(window.Illume)=="undefined"){window.Illume={init:function(){Illume.UI.init();Illume.Editor.init();Illume.Diff.init();Illume.Story.init();Illume.Passages.init();Illume.Overview.init();this.UI.updateList();this.Overview.showStoryOverview();},popout:function(content){var w=window.open();w.document.write(content);},download:function(filename,text,contentType){if(!contentType)
+contentType='text/plain';window.URL=window.URL||window.webkitURL;var dataBlob=new Blob([text],{type:contentType});var downloader=document.createElement('a');downloader.setAttribute('innerHtml','downloader');downloader.setAttribute('href',window.URL.createObjectURL(dataBlob));downloader.setAttribute('download',filename);downloader.onclick=function(){document.body.removeChild(event.target);};document.body.appendChild(downloader);downloader.click();},viewChangeList:function(){this.generateChangeList(false);},saveChangeList:function(){this.generateChangeList(true);},generateChangeList:function(forExport){var buffer=[];var diffs;var p;var matches=Illume.Passages.findPassages(function(p){return p.changed;});var title=Illume.Story.storyName+' Change List - '+(new Date()).toLocaleString();if(matches.length<1){alert('No changes have been made.');return'';}
+buffer.push('<html><he','ad>');buffer.push('<title>',title,'</title>');buffer.push('<style type="text/css">');buffer.push('ins {background: #9f9;} del {background: #f99;}');buffer.push("body{font-family:'Open Sans','Source Code Pro','Deja Vu Sans','Arial',sans-serif;}");buffer.push("h1{text-align:center;}");buffer.push("h2{margin:50px 0px 0px 10px;}");buffer.push("input{float:right;}");buffer.push("pre{margin: 0px;line-height: 175%;font-size: 12pt;border: solid #999;border-width: 1px 0px 1px 0px;}");buffer.push('</style>');buffer.push('</he','ad><bo','dy>');buffer.push('<h1>',title,'</h1>');for(var i in matches){p=matches[i];diffs=window.Illume.Diff.diff(this.encodeEntities(p.originalContent),this.encodeEntities(p.content));buffer.push('<div id="p.'+p.id+'">');buffer.push('<input type="button" value="Done" onclick="this.parentNode.remove(this);" />');buffer.push("<h2>",p.name,"</h2>");buffer.push("<pre>",window.Illume.Diff.formatDiffs(diffs),"</pre>");buffer.push("</div>");}
+buffer.push('</bo','dy></html>');var output=buffer.join('');if(forExport){this.download(title+'.html',output,'text/html');}else{this.popout(output);}},encodeEntities:function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');},exportTwee:function(){this.download(Illume.Story.storyName+".tw",Illume.Entweedle.export(),'text/plain');},saveToFile:function(){alert("Note: the saved file will be a fresh copy of this illumination and will not include any changes you've made to this version.");this.download(Illume.Story.storyName+" (Illuminated).html",window.document.documentElement.innerHTML,'text/html');}}
+window.Illume.Overview={introText:'',tips:'',init:function(){this.introText=window.document.getElementById('introText').innerHTML;this.tips=window.document.getElementById('tips').innerHTML;},showStoryOverview:function(){Illume.Story.compileStats();var buffer=[];buffer.push(this.generateTile("Welcome to Illume",Illume.Overview.introText,'2x1'));buffer.push(this.generateTile("Stats",this.generateTable(Illume.Story.generateStorySummary())+'<p>These do not reflect changes made during review or by macros during play.</p>'));buffer.push(this.generateTile("Review Summary",this.generateTable(Illume.Passages.generateReviewSummary())));buffer.push(this.generateTile("Passage Summary",this.generateTable(Illume.Passages.generateSummary()),'2x1'));buffer.push(this.generateTile("Tags",this.generateTable(Illume.Story.getTagSummary(),true),'1x1'));buffer.push(this.generateTile("Tips",Illume.Overview.tips));Illume.UI.showGeneralOutput('Story Overview',buffer.join(''));},generateTile:function(title,content,size,classes){var buffer=[];if(!size)
+size='1x1';buffer.push('<div class="infoTile tile',size,' ',classes,'"><div class="title">');buffer.push(title);buffer.push('</div><div class="content">');buffer.push(content);buffer.push('</div></div>');return buffer.join('');},generateTable:function(o,preserveLabels){var label,link,data;var buffer=[];var isHeader=false;buffer.push("<table>");for(key in o){label=key;if(label.indexOf("header.")>-1){label=label.substring(7);isHeader=true;}else{isHeader=false}
+if(!preserveLabels){label=label.replace(/[A-Z][a-z]*/g,function(word){return' '+word.charAt(0).toUpperCase()+word.substr(1);});label=label.charAt(0).toUpperCase()+label.substr(1);}
+data=o[key];link=data['illumeLink'];buffer.push("<tr");if(isHeader){buffer.push(' class="header"');}
+buffer.push("><td>");if(link&&link.length>0){buffer.push('<span class="link" onclick="'+link+'">');}
+buffer.push(label);if(link){buffer.push('</span>');}
+buffer.push("</td>");if(typeof data=="object"){for(var i in data){if(i=='illumeLink')
+continue;buffer.push('<td>',data[i],'</td>');}}else{buffer.push('<td>',data,'</td>')}
+buffer.push("</tr>");}
+buffer.push("</table>");return buffer.join('');}}
+window.Illume.Diff={logic:null,init:function(){this.logic=new window.diff_match_patch();},diff:function(s1,s2){var diffs=this.logic.diff_main(s1,s2);this.cleanup(diffs);return diffs;},cleanup:function(diffs){this.logic.diff_cleanupSemantic(diffs);},formatDiffs:function(diffs){var html=[];var i=0;for(var x=0;x<diffs.length;x++){var op=diffs[x][0];var data=diffs[x][1];var text=data;switch(op){case window.DIFF_INSERT:html[x]='<ins>'+text+'</ins>';break;case window.DIFF_DELETE:html[x]='<del>'+text+'</del>';break;case window.DIFF_EQUAL:html[x]=''+text+'';break;}
+if(op!==window.DIFF_DELETE){i+=data.length;}}
+return html.join('');}}
+window.Illume.UI={filter:null,filterTag:null,byTagOption:null,passageListContent:null,passageViewer:null,generalOutput:null,init:function(){this.filter=window.document.getElementById('filter');this.byTagOption=window.document.getElementById('byTagOption');this.passageListContent=window.document.getElementById('passageListContent');this.passageViewer=window.document.getElementById('passageViewer');this.generalOutput=window.document.getElementById('generalOutput');},filterChanged:function(){if(this.filter.value=='byTag'){this.filterTag=null;}
+this.updateList();},filterByTag:function(tag){this.filterTag=tag;this.filter.value='byTag';this.updateList();},updateFilterList:function(){this.byTagOption.textContent="By Tag...";},switchFilter:function(value){this.filter.value=value;this.updateList();},updateList:function(){var matches={};if(this.filter.value=='unreviewed'){matches=Illume.Passages.findPassages(function(p){return!p.reviewed;});}else if(this.filter.value=='reviewed'){matches=Illume.Passages.findPassages(function(p){return p.reviewed;});}else if(this.filter.value=='changed'){matches=Illume.Passages.findPassages(function(p){return p.changed;});}else if(this.filter.value=='unchanged'){matches=Illume.Passages.findPassages(function(p){return!p.changed;});}else if(this.filter.value=='orphans'){matches=Illume.Passages.findPassages(function(p){return(p.inboundLinks==0)});}else if(this.filter.value=='deadEnds'){matches=Illume.Passages.findPassages(function(p){return(p.links==0)});}else if(this.filter.value=='passThroughs'){matches=Illume.Passages.findPassages(function(p){return(p.links==1&&p.inboundLinks==1)});}else if(this.filter.value=='all'){matches=Illume.Passages.getAll();}else if(this.filter.value=='byTag'){if(!this.filterTag)
+this.filterTag=window.prompt("Show passages with tag:");if(!this.filterTag)
+return;this.byTagOption.textContent="By Tag... ["+this.filterTag+"]";matches=Illume.Passages.findByTag(this.filterTag);}
+this.passageListContent.innerHTML='';var buffer=[];for(var i in matches){buffer.push("<span onclick=\"window.Illume.UI.showPassage('",matches[i].id,"');\">");if(matches[i].reviewed){buffer.push('<div class="flag reviewed">R</div>');}
+if(matches[i].changed){buffer.push('<div class="flag changed">C</div>');}
+buffer.push(matches[i].name);buffer.push("</span>");}
+this.passageListContent.innerHTML=buffer.join('');this.updateFooter();},updateFooter:function(){var footerLeft=window.document.getElementById('footerLeft');var footerRight=window.document.getElementById('footerRight');var reviewed=Illume.Passages.countPassages(function(p){return p.reviewed;});var changed=Illume.Passages.countPassages(function(p){return p.changed;});var total=Illume.Passages.passageCount;var remaining=total-reviewed;var reviewedPercentage=Math.ceil((reviewed / total)*100);var buffer=[];if(remaining>0){buffer.push(reviewed,' reviewed, ');buffer.push(remaining,' remaining');buffer.push(" (");}
+buffer.push(reviewedPercentage,'% reviewed');if(remaining>0){buffer.push(')');}
+footerLeft.innerHTML=buffer.join('');buffer=[];if(changed>0){buffer.push(changed);buffer.push(' changed <input type="button" id="footerChangeListButton" value="Show Change List" onclick="Illume.viewChangeList()">');}
+footerRight.innerHTML=buffer.join('');},showGeneralOutput:function(title,content){var header=window.document.getElementById('generalTitle');var body=window.document.getElementById('generalContent');header.innerHTML=title;body.innerHTML=content;generalOutput.style.display='block';passageViewer.style.display='none';},showPassage:function(id){var p=Illume.Passages.getPassage(id);if(!p){alert(id+' not found');return;}
+window.document.getElementById("passageTitle").textContent=p.name;var tagContainer=window.document.getElementById("passageTags");tagContainer.innerHTML='';var buffer=[];for(var i in p.tags){if(p.tags[i]){buffer.push("<span class=\"tag\" onclick=\"window.Illume.UI.filterByTag('");buffer.push(p.tags[i]);buffer.push("');\">");buffer.push(p.tags[i]);buffer.push("</span>");}}
+tagContainer.innerHTML=buffer.join('');Illume.Editor.editPassage(id);generalOutput.style.display='none';passageViewer.style.display='block';}}
+window.Illume.Editor={editor:null,currentPassageID:null,currentPassage:null,changeViewer:null,controls:null,changesShown:false,init:function(){this.editor=window.document.getElementById('editor');this.controls=window.document.getElementById('passageControls');this.changeViewer=window.document.getElementById('changeViewer');this.editor.onchange=this.changeHandler;this.editor.onkeyup=this.inputHandler;},editPassage:function(id){this.currentPassageID=id;this.currentPassage=Illume.Passages.getPassage(id);this.editor.value=this.currentPassage.content;this.updateControls();},setReviewedHandler:function(isReviewed){Illume.Editor.setReviewed(isReviewed);},setReviewed:function(isReviewed){if(this.currentPassage.reviewed!=isReviewed){this.currentPassage.reviewed=isReviewed;this.updateControls();Illume.UI.updateList();}},revert:function(){this.currentPassage.content=this.currentPassage.originalContent;this.currentPassage.changed=false;this.editPassage(this.currentPassageID);Illume.UI.updateList();this.hideChanges();},updateControls:function(){var c=window.document.getElementById('dirtyControls');var r=window.document.getElementById('reviewedControls');var ur=window.document.getElementById('unreviewedControls');c.style.display=(this.currentPassage.changed)?'inline-block':'none';r.style.display=(this.currentPassage.reviewed)?'inline-block':'none';ur.style.display=(!this.currentPassage.reviewed)?'inline-block':'none';this.currentPassage.changed?this.showChanges():this.hideChanges();},showChanges:function(){this.updateChangeViewer(true);this.updateChangeDiffs();},hideChanges:function(){this.updateChangeViewer(false);},toggleChanges:function(){this.updateChangeViewer(!this.changesShown);},updateChangeViewer:function(shown){this.changeViewer.style.display=(shown?'block':'none');window.document.getElementById('editorCorral').style.bottom=(shown?'300px':'0px');this.changesShown=shown;this.updateChangeDiffs();},updateChangeDiffs:function(){if(this.changesShown){var p=this.currentPassage;var diffs=window.Illume.Diff.diff(Illume.encodeEntities(p.originalContent),Illume.encodeEntities(p.content));this.changeViewer.innerHTML=window.Illume.Diff.formatDiffs(diffs);}},updatePassage:function(){this.currentPassage.content=this.editor.value;},inputHandler:function(){if(!Illume.Editor.currentPassage.changed){Illume.Editor.currentPassage.changed=true;Illume.UI.updateList();}
+Illume.Editor.updatePassage();Illume.Editor.updateControls();Illume.Editor.updateChangeDiffs();},changeHandler:function(){Illume.Editor.updatePassage();Illume.Editor.updateControls();Illume.Editor.updateChangeDiffs();}}
+window.Illume.Story={storyData:null,storyName:'Roundtable 1',storyFormat:'',startPassage:1,stats:{},wordCount:0,tags:{},init:function(){this.loadStoryData();},loadStoryData:function(){var storyDataElements=window.document.getElementsByTagName("tw-storydata");if(storyDataElements.length>0){this.storyData=storyDataElements[0];this.storyFormat=this.storyData.getAttribute("format");this.startPassage=this.storyData.getAttribute("startnode");}},compileStats:function(){var p;var s={format:this.storyFormat,passageCount:Illume.Passages.passageCount,wordCount:this.wordCount,orphans:Illume.Passages.countPassages(function(p){return(p.inboundLinks<1);}),deadEnds:Illume.Passages.countPassages(function(p){return(p.links<1);}),'pass-throughs':Illume.Passages.countPassages(function(p){return(p.links==1&&p.inboundLinks==1);}),averageLinks:Math.floor(Illume.Passages.averageConnectivity*100)/ 100,averageWords:Math.floor(Illume.Passages.averageLength*100)/ 100};this.stats=s;},generateStorySummary:function(){var result=Object.create(this.stats);result['format']=result.format;result.orphans={illumeLink:"Illume.UI.switchFilter('orphans');",value:result.deadEnds}
+result.deadEnds={illumeLink:"Illume.UI.switchFilter('deadEnds');",value:result.deadEnds}
+result['pass-throughs']={illumeLink:"Illume.UI.switchFilter('passThroughs');",value:result['pass-throughs']}
+result.passageCount={illumeLink:"Illume.UI.switchFilter('all');",value:result.passageCount}
+return result;},getTagSummary:function(){var results={"header.Tag":"Occurences"}
+var label;for(var t in this.tags){label="<span class=\"tag\" onclick=\"window.Illume.UI.filterByTag('"+t+"');\">"+t+"</span>";results[label]=this.tags[t];}
+return results;}}
+window.Illume.Passages={passages:[],linkCount:{},deadLinks:[],passageCount:0,averageConnectivity:0,averageLength:0,basePassage:{id:-1,name:"Undefined",tags:[],links:0,inboundLinks:0,connections:0,sugarcubeMacros:0,harloweMacros:0,harloweHooks:0,wordCount:0,content:'',originalContent:'',reviewed:false,changed:false},init:function(){this.loadPassages();},getPassage:function(id){return this.passages[id];},getAll:function(){return this.passages.slice();},findByTag:function(tag){var results=[];var p;results.length=0;for(var i=0;i<this.passages.length;i++){p=this.passages[i];if(p&&p.tags.indexOf(tag)>-1){results.push(p);}}
+return results;},findByName:function(name){var p;for(var i in this.passages){p=this.passages[i];if(p&&p.name==name){return p;}}
+return null;},findPassages:function(checkFunction){var p;var results=[];if(!checkFunction||typeof(checkFunction)!="function"){return-1;}
+for(var i in this.passages){p=this.passages[i];if(checkFunction(p)){results.push(p);}}
+return results;},countPassages:function(checkFunction){var results=this.findPassages(checkFunction);if(!results)
+return 0;else
+return results.length;},loadPassages:function(){var passageElements=window.document.getElementsByTagName("tw-passagedata");var e;var p;var tagString;linkCount={};var matchers={links:/[^`]\[{2}(.*)\]{2}(?=[^`])/g,sugarcubeMacros:/\<{2}.*\>{2}/g,harloweMacros:/[^`]\([^W]*:.*\)(?=[^`])/g,harloweHooks:/[^`\[]\[[^\[\]]*\](?=[^`\]])/g};this.passages.length=0;for(var i=0;i<passageElements.length;i++){p=Object.create(this.basePassage);e=passageElements[i];tagString=e.getAttribute("tags").trim();if(!tagString||tagString.length<1)
+p.tags=[];else
+p.tags=tagString.split(" ");if(p.tags.indexOf("illumeIgnore")>-1){continue;}
+if(p.tags.indexOf("illumeReviewed")>-1){p.reviewed=true;}
+p.id=e.getAttribute("pid");p.name=e.getAttribute("name");p.content=e.textContent;p.originalContent=e.textContent;p.strippedContent=e.textContent;for(var j in matchers){p[j]=(p.content.match(matchers[j])||[]).length;}
+if(p.harloweMacros>0)
+p.strippedContent=p.strippedContent.replace(matchers.harloweMacros,'');if(p.sugarcubeMacros>0)
+p.strippedContent=p.strippedContent.replace(matchers.sugarcubeMacros,'');var re,match,destination;re=matchers.links;re.lastIndex=0;var destinations=[];while((match=re.exec(' '+p.content+' '))!==null){destination=match[1];if(destination.indexOf("->")>-1){destination=destination.substring(destination.indexOf("->")+2);}else if(destination.indexOf("<-")>-1){destination=destination.substring(0,destination.indexOf("<-"));}else if(destination.indexOf("|")>-1){destination=destination.substring(destination.indexOf("|")+1);}
+if(destinations.indexOf(destination)<0)
+destinations.push(destination);}
+for(var d in destinations){if(linkCount[destinations[d]])
+++linkCount[destinations[d]];else
+linkCount[destinations[d]]=1;}
+p.wordCount=p.strippedContent.trim().replace(/\s+/g,' ').split(' ').length;this.passages[p.id]=p;}
+var killList=[];var connectivityTotal=0;this.passageCount=0
+Illume.Story.wordCount=0;Illume.Story.tags={};for(var i in this.passages){p=this.passages[i];p.inboundLinks=(linkCount[p.name]||0);p.connections=p.links+p.inboundLinks;killList.push(p.name);Illume.Story.wordCount+=p.wordCount;connectivityTotal+=p.connections;++this.passageCount;for(var t in p.tags){if(!Illume.Story.tags[p.tags[t]])
+Illume.Story.tags[p.tags[t]]=1;else
+++Illume.Story.tags[p.tags[t]];}}
+for(var n in killList){delete(linkCount[killList[n]]);}
+this.averageLength=Illume.Story.wordCount / this.passageCount;this.averageConnectivity=connectivityTotal / this.passageCount;this.deadLinks=linkCount;},generateSummary:function(){var ps=this.passages.slice();var results={};var p;ps.sort(function(a,b){if(a.connections<b.connections)
+return 1;if(a.connections>b.connections)
+return-1;return 0;});results["header.Passage"]=['Length','Links (In/Out)'];for(var i in ps){p=ps[i];results[p.name]={illumeLink:"Illume.UI.showPassage('"+p.id+"');",wordCount:p.wordCount,connections:p.connections+" ("+p.inboundLinks+"/"+p.links+")"};}
+return results;},generateReviewSummary:function(){var result={};var reviewed=this.countPassages(function(p){return p.reviewed;});var changed=this.countPassages(function(p){return p.changed;});result['totalPassages']={illumeLink:"window.Illume.UI.switchFilter('all');",value:this.passageCount}
+result['changed']={illumeLink:"window.Illume.UI.switchFilter('changed');",value:changed};result['reviewed']={illumeLink:"window.Illume.UI.switchFilter('reviewed');",value:reviewed};result['reviewCompleted']={illumeLink:"window.Illume.UI.switchFilter('unreviewed');",value:Math.ceil(reviewed / this.passageCount*100)+'%'};return result;}}
+window.Illume.Entweedle={export:function(){var output=window.document.getElementById("output");var buffer=[];var storyData=window.document.getElementsByTagName("tw-storydata");if(storyData){buffer.push(this.buildPassage("StoryTitle","",storyData[0].getAttribute("name")));}
+var userScript=window.document.getElementById("twine-user-script");if(userScript){buffer.push(this.buildPassage("UserScript","script",userScript.innerHTML));}
+var userStylesheet=window.document.getElementById("twine-user-stylesheet");if(userStylesheet){buffer.push(this.buildPassage("UserStylesheet","stylesheet",userStylesheet.innerHTML));}
+var passages=window.document.getElementsByTagName("tw-passagedata");for(var i=0;i<passages.length;i++){buffer.push(this.buildPassageFromElement(passages[i]));}
+return buffer.join('');},buildPassageFromElement:function(passage){var name=passage.getAttribute("name");if(!name){name="Untitled Passage";}
+var tags=passage.getAttribute("tags");var content=passage.textContent;return this.buildPassage(name,tags,content);},buildPassage:function(title,tags,content){var result=[];result.push(":: ",title);if(tags){result.push("[",tags,"]");}
+result.push("\r\n",this.scrub(content),"\r\n\r\n");return result.join('');},scrub:function(content){content=content.replace(/^::/gm," ::");return content;}}
+window.Illume.init();}}		
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			Roundtable 1
+		</div>
+		<div id="workspace">
+			<div id="sidebar">
+				<div id="links">
+					<span onclick="window.Illume.Overview.showStoryOverview();">Story Overview</span>
+					<span onclick="window.Illume.viewChangeList();">View Change List</span>
+					<span onclick="window.Illume.saveChangeList();">Export Change List...</span>
+					<span onclick="window.Illume.exportTwee();">Export Twee Source</span>
+					<span onclick="window.Illume.saveToFile();">Export Illumination...</span>
+				</div>
+				<div id="passageListHeader">
+					<select id="filter" oninput="window.Illume.UI.updateFilterList();" onchange="window.Illume.UI.filterChanged();">
+						<option value="unreviewed">Unreviewed</option>
+						<option value="reviewed">Reviewed</option>
+						<option value="changed">Changed</option>
+						<option value="unchanged">Unchanged</option>
+						<option value="orphans">Orphans</option>
+						<option value="deadEnds">Dead Ends</option>
+						<option value="passThroughs">Pass-Throughs</option>
+						<option id="byTagOption" value="byTag">By Tag...</option>
+						<option value="all">All Passages</option>
+					</select>
+				</div>
+				<div id="passageListContent"><span onclick="window.Illume.UI.showPassage('1');">Begin</span><span onclick="window.Illume.UI.showPassage('2');">Elsa 1A</span><span onclick="window.Illume.UI.showPassage('3');">Elsa 1B</span><span onclick="window.Illume.UI.showPassage('4');">Elsa 1C</span><span onclick="window.Illume.UI.showPassage('5');">Sophie 1</span><span onclick="window.Illume.UI.showPassage('6');">Sophie 1A</span><span onclick="window.Illume.UI.showPassage('7');">Sophie 1B</span><span onclick="window.Illume.UI.showPassage('8');">Sophie 1C</span><span onclick="window.Illume.UI.showPassage('9');">Momo 1</span><span onclick="window.Illume.UI.showPassage('10');">Momo 1A</span><span onclick="window.Illume.UI.showPassage('11');">Momo 1B</span><span onclick="window.Illume.UI.showPassage('12');">Margaret 1</span><span onclick="window.Illume.UI.showPassage('13');">Sophie 2</span><span onclick="window.Illume.UI.showPassage('14');">Sophie 2A</span><span onclick="window.Illume.UI.showPassage('15');">Sophie 2B</span><span onclick="window.Illume.UI.showPassage('16');">Sophie 2C</span><span onclick="window.Illume.UI.showPassage('17');">Momo 2</span><span onclick="window.Illume.UI.showPassage('18');">Margaret 2</span><span onclick="window.Illume.UI.showPassage('19');">Margaret 2A</span><span onclick="window.Illume.UI.showPassage('20');">Elsa 2</span><span onclick="window.Illume.UI.showPassage('21');">Elsa 2A</span><span onclick="window.Illume.UI.showPassage('22');">Elsa 2B</span><span onclick="window.Illume.UI.showPassage('23');">Elsa 2C</span><span onclick="window.Illume.UI.showPassage('24');">Momo 3</span><span onclick="window.Illume.UI.showPassage('25');">Margaret 3</span><span onclick="window.Illume.UI.showPassage('26');">Elsa 3</span><span onclick="window.Illume.UI.showPassage('27');">Sophie 3</span></div>
+			</div>
+			<div id="contentArea">
+				<div id="generalOutput" style="display: block;">
+					<div id="generalHeader">
+						<div id="generalTitle">Story Overview</div>
+					</div>
+					<div id="generalContent"><div class="infoTile tile2x1 "><div class="title">Welcome to Illume</div><div class="content">
+			<p>
+				This is the Story Overview, from which you can find general information and statistics about your story.
+			</p>
+			<p>
+				Use the list at the lower-left to filter and view the passages of your story, and click on a passage to open it in review mode. While reviewing a passage, you can make changes in-place, compare your changed version to the original, revert those changes if needed, and flag a passage as reviewed to help you keep track of which passages have been reviewed and which ones remain.
+			</p>
+			<p>
+				You can use the links at the top left to view a change list, which shows all changes made to all passages, or export it to a file. You can also save a copy of this illumination for later use, or export your story in twee source format.
+			</p>
+			<p>
+				For more information about Illume, visit the <a href="http://maximumverbosity.net/twine/Illume/">Illume web site</a>.
+			</p>
+		</div></div><div class="infoTile tile1x1 "><div class="title">Stats</div><div class="content"><table><tbody><tr><td>Format</td><td>Harlowe</td></tr><tr><td><span class="link" onclick="Illume.UI.switchFilter('orphans');">Orphans</span></td><td>18</td></tr><tr><td><span class="link" onclick="Illume.UI.switchFilter('deadEnds');">Dead Ends</span></td><td>18</td></tr><tr><td><span class="link" onclick="Illume.UI.switchFilter('passThroughs');">Pass-throughs</span></td><td>2</td></tr><tr><td><span class="link" onclick="Illume.UI.switchFilter('all');">Passage Count</span></td><td>27</td></tr><tr><td>Word Count</td><td>918</td></tr><tr><td>Average Links</td><td>1.96</td></tr><tr><td>Average Words</td><td>34</td></tr></tbody></table><p>These do not reflect changes made during review or by macros during play.</p></div></div><div class="infoTile tile1x1 "><div class="title">Review Summary</div><div class="content"><table><tbody><tr><td><span class="link" onclick="window.Illume.UI.switchFilter('all');">Total Passages</span></td><td>27</td></tr><tr><td><span class="link" onclick="window.Illume.UI.switchFilter('changed');">Changed</span></td><td>0</td></tr><tr><td><span class="link" onclick="window.Illume.UI.switchFilter('reviewed');">Reviewed</span></td><td>0</td></tr><tr><td><span class="link" onclick="window.Illume.UI.switchFilter('unreviewed');">Review Completed</span></td><td>0%</td></tr></tbody></table></div></div><div class="infoTile tile2x1 "><div class="title">Passage Summary</div><div class="content"><table><tbody><tr class="header"><td> Passage</td><td>Length</td><td>Links (In/Out)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('24');"> Momo 3</span></td><td>23</td><td>5 (3/2)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('9');"> Momo 1</span></td><td>19</td><td>5 (3/2)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('20');"> Elsa 2</span></td><td>18</td><td>5 (2/3)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('5');"> Sophie 1</span></td><td>28</td><td>5 (3/2)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('13');"> Sophie 2</span></td><td>38</td><td>3 (1/2)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('25');"> Margaret 3</span></td><td>71</td><td>3 (1/2)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('17');"> Momo 2</span></td><td>25</td><td>3 (3/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('18');"> Margaret 2</span></td><td>34</td><td>2 (1/1)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('12');"> Margaret 1</span></td><td>31</td><td>2 (2/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('6');"> Sophie 1 A</span></td><td>45</td><td>2 (1/1)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('1');"> Begin</span></td><td>18</td><td>2 (0/2)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('11');"> Momo 1 B</span></td><td>22</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('4');"> Elsa 1 C</span></td><td>36</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('27');"> Sophie 3</span></td><td>19</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('14');"> Sophie 2 A</span></td><td>32</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('15');"> Sophie 2 B</span></td><td>33</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('16');"> Sophie 2 C</span></td><td>41</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('2');"> Elsa 1 A</span></td><td>47</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('7');"> Sophie 1 B</span></td><td>40</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('19');"> Margaret 2 A</span></td><td>9</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('8');"> Sophie 1 C</span></td><td>53</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('21');"> Elsa 2 A</span></td><td>41</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('22');"> Elsa 2 B</span></td><td>48</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('23');"> Elsa 2 C</span></td><td>52</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('3');"> Elsa 1 B</span></td><td>48</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('10');"> Momo 1 A</span></td><td>26</td><td>1 (1/0)</td></tr><tr><td><span class="link" onclick="Illume.UI.showPassage('26');"> Elsa 3</span></td><td>21</td><td>1 (1/0)</td></tr></tbody></table></div></div><div class="infoTile tile1x1 "><div class="title">Tags</div><div class="content"><table><tbody><tr class="header"><td>Tag</td><td>Occurences</td></tr></tbody></table></div></div><div class="infoTile tile1x1 "><div class="title">Tips</div><div class="content">
+			<p>
+				Tag a passage "illumeIgnore" and it will be totally ignored by Illume for all purposes.
+			</p>
+			<p>
+				If a passage is not being modified, tag it "illumeReviewed" to set its initial state to Reviewed. The editor can still refer back to it if needed.
+			</p>
+		</div></div></div>
+				</div>
+				<div id="passageViewer" style="display: none;">
+					<div id="passageHeader">
+						<div id="passageTitle"></div>
+						<div id="passageTags"></div>
+					</div>
+					<div id="passageControls">
+						<div id="dirtyControls">
+							Modified <input id="revertChangesButton" type="button" value="Revert" onclick="Illume.Editor.revert();">
+						</div>
+						<div id="reviewedControls">
+							Reviewed <input id="unreviewedButton" type="button" value="Flag as Unreviewed" onclick="Illume.Editor.setReviewedHandler(false);">
+						</div>
+						<div id="unreviewedControls">
+							Unreviewed <input id="reviewedButton" type="button" value="Flag as Reviewed" onclick="Illume.Editor.setReviewedHandler(true);">
+						</div>
+					</div>
+					<div id="passageContent">
+						<div id="editorCorral"><textarea id="editor"></textarea></div>
+						<div id="changeViewer"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="footerRight"></div>
+			<div id="footerLeft">0 reviewed, 27 remaining (0% reviewed)</div>
+		</div>
+		<div id="introText" style="display: none;">
+			<p>
+				This is the Story Overview, from which you can find general information and statistics about your story.
+			</p>
+			<p>
+				Use the list at the lower-left to filter and view the passages of your story, and click on a passage to open it in review mode. While reviewing a passage, you can make changes in-place, compare your changed version to the original, revert those changes if needed, and flag a passage as reviewed to help you keep track of which passages have been reviewed and which ones remain.
+			</p>
+			<p>
+				You can use the links at the top left to view a change list, which shows all changes made to all passages, or export it to a file. You can also save a copy of this illumination for later use, or export your story in twee source format.
+			</p>
+			<p>
+				For more information about Illume, visit the <a href="http://maximumverbosity.net/twine/Illume/">Illume web site</a>.
+			</p>
+		</div>
+		<div id="tips" style="display: none;">
+			<p>
+				Tag a passage "illumeIgnore" and it will be totally ignored by Illume for all purposes.
+			</p>
+			<p>
+				If a passage is not being modified, tag it "illumeReviewed" to set its initial state to Reviewed. The editor can still refer back to it if needed.
+			</p>
+		</div>
+		<div id="storyData" style="display: none;">
+			<tw-storydata name="Roundtable 1" startnode="1" creator="Twine" creator-version="2.1.0" ifid="9A444012-B710-471C-A12F-B53DDEA05EEA" format="Harlowe" format-version="1.2.3" options="" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+
+
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">
+
+
+</script><tw-passagedata pid="1" name="Begin" tags="" position="451,0">"Something like this could never happen!"
+
+[[Thought the Princess|Elsa 1A]]
+[[Moaned the Princess|Elsa 1B]]
+[[Cried the Princess|Elsa 1C]]</tw-passagedata><tw-passagedata pid="2" name="Elsa 1A" tags="" position="301,150">She didn't to voice her opinion at such a ridiculous idea thought the princess as she filed her nails. Gosh her nails had grown so long. But too long? Eh. She was a princess. She could grow her nails to any length she desired. 
+
+[[To Sophie|Sophie 1]]</tw-passagedata><tw-passagedata pid="3" name="Elsa 1B" tags="" position="452,149">The princess moaned as she took a huge bite of an apple, chewing it like a cow. Pretty sure she spat a piece of it at her lady-in-waiting, but who cares? She was a princess. She could spit chunks of apple at whoever she pleased.
+
+[[To Sophie|Sophie 1]]</tw-passagedata><tw-passagedata pid="4" name="Elsa 1C" tags="" position="601,151">The princess cried as she blew all the snot in the world into a hankerchief. Nothing so horrible could happen to the princess, because she's a princess, and nothing horrible happens to princesses. 
+
+[[To Sophie|Sophie 1]]</tw-passagedata><tw-passagedata pid="5" name="Sophie 1" tags="" position="451,301">No. The princess knew it wouldn't come true.
+
+[[Her kingdom had the largest army!|Sophie 1A]]
+
+[[Her prince would protect her.|Sophie 1B]]
+
+[[Her people's villages were plenty fortified.|Sophie 1C]]</tw-passagedata><tw-passagedata pid="6" name="Sophie 1A" tags="" position="299,450">No. The princess most definitely knew it wouldn't come true, but in the slight chance that is did, her kingdom had the largest army. Surely they could do something about it. Size is everything. Or so an army wants you to believe.
+
+[[To Momo|Momo 1]]
+</tw-passagedata><tw-passagedata pid="7" name="Sophie 1B" tags="" position="450,450">No. The princess most definitely knew it wouldn't come true, but in the case it did, her beloved prince would surely come galloping over the hills from hunting with his flowing long blonde hair and rescue her. 
+
+[[To Momo|Momo 1]]</tw-passagedata><tw-passagedata pid="8" name="Sophie 1C" tags="" position="600,452">No. The princess most definitely knew it wouldn't come true, but in the slight chance it did, the villages were fortified well enough with walls in the like. Such defense meant the princess never had to lift her finger when enemies threatened her lands. Just the way she liked it.
+
+[[To Momo|Momo 1]]</tw-passagedata><tw-passagedata pid="9" name="Momo 1" tags="" position="451,626">But the princess could believe whatever she liked, for...
+
+[[the witch foretold otherwise...|Momo 1A]]
+
+[[the witch cursed otherwise...|Momo 1B]]
+</tw-passagedata><tw-passagedata pid="10" name="Momo 1A" tags="" position="301,776">A massive storm would most certainly destroy the princess's kingdom. And there was nothing she could do about it, except accept her fate.
+
+[[To Margaret|Margaret 1]]</tw-passagedata><tw-passagedata pid="11" name="Momo 1B" tags="" position="599,776">A massive storm would most certainly destroy the princesses kingdom. She brought this upon herself with her selfish ways.
+
+[[To Margaret|Margaret 1]]</tw-passagedata><tw-passagedata pid="12" name="Margaret 1" tags="" position="451,924">Margaret: And then everyone died, because the princess only relied on others and not herself. 
+
+Elsa: Margaret!
+
+Margaret: What? She seems like a massive idiot. Just move on [[to Sophie|Sophie 2]]</tw-passagedata><tw-passagedata pid="13" name="Sophie 2" tags="" position="452,1073">And so the massive storm hit and washed away the princess's kingdom.  Her army, her prince, and her villages were all swept away.
+
+[[The princess wept....|Sophie 2A]]
+[[The princess was furious...|Sophie 2B]]
+[[The princess didn't actually care.|Sophie 2C]]</tw-passagedata><tw-passagedata pid="14" name="Sophie 2A" tags="" position="300,1223">The princess wept for her kingdom. If only she had listened to the witch... But wait. It was kind of out of her power, right? What's done is done.
+
+[[To Momo|Momo 2]]</tw-passagedata><tw-passagedata pid="15" name="Sophie 2B" tags="" position="451,1224">The princess was furious! She yelled and yelled, but no one was around to listen to her complaints.  They just echoed down the empty halls. If only walls had ears...
+
+[[To Momo|Momo 2]]</tw-passagedata><tw-passagedata pid="16" name="Sophie 2C" tags="" position="601,1225">The princess didn't really care all that much that her kingdom was gone. Now she didn't need to answer anymore stupid questions like "When will you produce an heir?" or "Will you bless my chicken with a kiss?"
+
+[[To Momo|Momo 2]]</tw-passagedata><tw-passagedata pid="17" name="Momo 2" tags="" position="450,1374">The princess was now secluded in her castle.
+
+Alone.
+
+Since everyone is dead, now she must kill time as well.
+
+But how?
+
+[[To Margaret|Margaret 2]]</tw-passagedata><tw-passagedata pid="18" name="Margaret 2" tags="" position="449,1523">See, what did I tell you? Everyone DIED.
+
+Sophie: Only because you said they did during your previous turn.
+
+[[Do I have to keep playing?|Margaret 2A]]
+
+[[Ugh. She decided to read a book.|Elsa 2]]</tw-passagedata><tw-passagedata pid="19" name="Margaret 2A" tags="" position="299,1648">Elsa: Yes.
+
+Margaret: FINE.
+
+[[She read a book.|Elsa 2]]</tw-passagedata><tw-passagedata pid="20" name="Elsa 2" tags="" position="451,1773">Read a book? Really...?
+
+Ugh.
+
+Alright.
+
+The princess read a book on...
+
+[[Economics|Elsa 2A]]
+[[Philosophy|Elsa 2B]]
+[[History|Elsa 2C]]
+</tw-passagedata><tw-passagedata pid="21" name="Elsa 2A" tags="" position="298,1923">And learned lots about economics. From supply and demand, to game theory for modeling competing behaviors and interacting agents.
+
+But most importantly, she learned production, cost, and efficiency were BORING. And decided to learn how to fly instead!
+
+[[To Momo|Momo 3]]</tw-passagedata><tw-passagedata pid="22" name="Elsa 2B" tags="" position="448,1925">And learned lots about philosophy. From Artistotle to Nagarjuna, to Suzanne Langer's idea that humans have the basic need to symbolize and to invest meaning in one's world.
+
+But most importantly, she learned that thinking was TIRING. And decided to learn how to fly instead!
+
+[[To Momo|Momo 3]]</tw-passagedata><tw-passagedata pid="23" name="Elsa 2C" tags="" position="600,1924">And learned lots about history. From the Ancient Greeks and Romans, to Ghengis Khan's mass murder that allowed for the creation of the Silk Road.
+
+But most importantly, she learned how Joan of Arc being burned at the stake was STUPID. And decided to learn how to fly instead!
+
+[[To Momo|Momo 3]]</tw-passagedata><tw-passagedata pid="24" name="Momo 3" tags="" position="448,2076">Oh! But how would the princess get wings?
+
+[[Grow her own|Margaret 3]]
+[[Steal them from a bird?|Margaret 3]]
+[[Make them from scratch.|Margaret 3]]</tw-passagedata><tw-passagedata pid="25" name="Margaret 3" tags="" position="448,2226">OK, no. Just no. This girl is doomed. 
+
+The princess realized that trying to fly was a bad idea, and decided instead that the massive storm was punishment from the higher ups for being an incompetent human being, thus she decided to take the time to think long and hard about her life.
+
+[[Why was she a princess?|Elsa 3]]
+[[Is she doing enough?|Elsa 3]]
+[[Did her subjects actually repect her?|Elsa 3]]</tw-passagedata><tw-passagedata pid="26" name="Elsa 3" tags="" position="448,2376">Then the princess realized why think when she could drown herself in champagne, because who cares! She's alone!
+
+[[to Sophie|Sophie 3]]</tw-passagedata><tw-passagedata pid="27" name="Sophie 3" tags="" position="448,2526">Except she's not. Perhaps the princess just needs a bit of agency...
+
+//the door bell rings//
+
+//Kino arrives//
+
+END</tw-passagedata></tw-storydata>
+		</div>
+	
+</body>
